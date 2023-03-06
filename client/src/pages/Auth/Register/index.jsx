@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Input, Submit } from "./style";
 import Logo from "@assets/logo.png";
@@ -7,11 +7,11 @@ import Banner from "@assets/banner.png";
 
 import LoadingRing from "@components/LoadingRing";
 
-import { checkEmail } from "@services/api/MasyarakatAPI";
+import { checkEmail, createUser } from "@services/api/MasyarakatAPI";
 
-const InputGroup = ({ label, name, type, value, handleChange, valueToggle, handleToggle, disabled }) => {
+const InputGroup = ({ label, name, type, value, handleChange, valueToggle, handleToggle, disabled, width }) => {
     return (
-        <div className="mb-4">
+        <div className="mb-4" style={{ width: width }}>
             <label className="block ml-1 mb-2 text-sm">{label}</label>
             <div className="flex flex-row">
                 {
@@ -32,6 +32,8 @@ const InputGroup = ({ label, name, type, value, handleChange, valueToggle, handl
 }
 
 function Register() {
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState("");
     const [namaLengkap, setNamaLengkap] = useState("");
     const [username, setUsername] = useState("");
@@ -39,13 +41,15 @@ function Register() {
     const [passwordShow, setPasswordShow] = useState(false);
     const [passwordConfirm, setPasswordConfirm] = useState("");
     const [passwordConfirmShow, setPasswordConfirmShow] = useState(false);
+    const [telp, setTelp] = useState("");
+    const [gender, setGender] = useState("L");
     const [isNewEmail, setIsNewEmail] = useState(false);
     const [loadingCheckEmail, setLoadingCheckEmail] = useState(false);
+    const [loadingRegister, setLoadingRegister] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
     function handleChangeEmail(e) {
         setEmail(e.target.value);
-
     }
     function handleChangeNamaLengkap(e) {
         setNamaLengkap(e.target.value);
@@ -57,7 +61,10 @@ function Register() {
         setPassword(e.target.value);
     }
     function handleChangePasswordConfirm(e) {
-        setConfirmPassword(e.target.value);
+        setPasswordConfirm(e.target.value);
+    }
+    function handleChangeTelp(e) {
+        setTelp(e.target.value);
     }
 
     function togglePasswordShow() {
@@ -74,9 +81,33 @@ function Register() {
             setIsNewEmail(result.success);
             if (!result.success) {
                 setErrorMessage(result.message);
+            } else {
+                setErrorMessage("");
             }
             setLoadingCheckEmail(false);
         });
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        setLoadingRegister(true);
+        if (password === passwordConfirm) {
+            createUser(namaLengkap, username, password, email, telp, gender).then((result) => {
+                if (!result.success) {
+                    setErrorMessage(result.message);
+                } else {
+                    setErrorMessage("");
+                    localStorage.setItem("isLoggedIn", true);
+                    localStorage.setItem("user", JSON.stringify(result.data));
+                    navigate("/", { replace: true });
+                }
+                setLoadingRegister(false);
+            }).catch(err => { setLoadingRegister(false); console.log(err); });
+        } else {
+            setLoadingRegister(false);
+            setErrorMessage("Password tidak sama");
+        }
+
     }
 
     return (
@@ -84,25 +115,47 @@ function Register() {
             <div className="flex flex-row flex-nowrap items-center text-center h-screen bg-violet-400">
                 <div className="mx-auto p-12 pb-6 bg-white rounded-xl drop-shadow-md" style={{ width: "90%", height: "90vh" }}>
                     <div className="mb-2">
+                        <div className="text-start links" onClick={() => { setIsNewEmail(false); setErrorMessage("") }} style={{ position: "absolute" }}>Ganti email</div>
                         <img src={Logo} alt="logo" width={50} className="mx-auto mb-2 rounded-full" />
                         <h1 className="font-bold text-2xl">Daftar Akun</h1>
                     </div>
-                    <div className="text-center text-red-700 text-sm mb-2" style={{ height: "20px", width: "100%" }}>{errorMessage}</div>
-                    <form className={`mx-auto text-start flex flex-column`} style={{ width: "100%" }} onSubmit={handleCheck}>
-                        <InputGroup label="Nama Lengkap" name="nama_lengkap" type="text" handleChange={handleChangeNamaLengkap} value={namaLengkap} />
-                        <InputGroup label="Username" name="username" type="text" handleChange={handleChangeUsername} value={username} />
-                        <InputGroup label="Password" name="password" type="password" value={password} handleChange={handleChangePassword} valueToggle={passwordShow} handleToggle={togglePasswordShow} />
-                        <InputGroup label="Confirm Password" name="confirm_password" type="password" value={passwordConfirm} handleChange={handleChangePasswordConfirm} valueToggle={passwordConfirmShow} handleToggle={togglePasswordConfirmShow} />
-                        <InputGroup label="Email" name="email" type="email" value={email} disabled={true} />
-                        <Submit disabled={!email || loadingCheckEmail ? true : false} className={`${!email || loadingCheckEmail ? 'bg-gray-300' : 'bg-violet-400 hover:bg-violet-500'} ease-out duration-300 `}>
+                    <div className="text-center text-red-700 text-sm my-3" style={{ height: "20px", width: "100%" }}>{errorMessage}</div>
+                    <form className={`mx-auto text-start flex flex-col`} style={{ width: "100%" }} onSubmit={handleSubmit}>
+                        <div className="flex flex-row" style={{ columnGap: "20px" }}>
+                            <InputGroup width="100%" label="Nama Lengkap" name="nama_lengkap" type="text" handleChange={handleChangeNamaLengkap} value={namaLengkap} />
+                            <InputGroup width="100%" label="Username" name="username" type="text" handleChange={handleChangeUsername} value={username} />
+                        </div>
+                        <div className="flex flex-row" style={{ columnGap: "20px" }}>
+                            <InputGroup width="100%" label="Password" name="password" type="password" value={password} handleChange={handleChangePassword} valueToggle={passwordShow} handleToggle={togglePasswordShow} />
+                            <InputGroup width="100%" label="Confirm Password" name="confirm_password" type="password" value={passwordConfirm} handleChange={handleChangePasswordConfirm} valueToggle={passwordConfirmShow} handleToggle={togglePasswordConfirmShow} />
+                        </div>
+                        <div className="flex flex-row" style={{ columnGap: "20px" }}>
+                            <InputGroup width="100%" label="Email" name="email" type="email" value={email} disabled={true} />
+                            <InputGroup width="100%" label="No. HP" name="telp" type="telp" value={telp} handleChange={handleChangeTelp} />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block ml-1 mb-2 text-sm">Jenis Kelamin</label>
+                            <div className="flex flex-row" style={{ columnGap: "20px" }}>
+                                <label>
+                                    <input type="radio" onClick={(e) => { setGender(e.target.value) }} checked={gender === 'L' ? true : false} value="L" name="gender" /> Laki-laki
+                                </label>
+                                <label>
+                                    <input type="radio" onClick={(e) => { setGender(e.target.value) }} checked={gender === 'P' ? true : false} value="P" name="gender" /> Perempuan
+                                </label>
+                            </div>
+                        </div>
+                        <Submit disabled={(!namaLengkap || !username || !password || !passwordConfirm || !email || !telp || !gender || loadingCheckEmail) ? true : false} className={`${(!namaLengkap || !username || !password || !passwordConfirm || !email || !telp || !gender || loadingCheckEmail) ? 'bg-gray-300' : 'bg-violet-400 hover:bg-violet-500'} ease-out duration-300 `}>
                             {
-                                loadingCheckEmail ?
+                                loadingRegister ?
                                     <LoadingRing width={"24px"}></LoadingRing>
                                     :
                                     'Daftar'
                             }
                         </Submit>
                     </form>
+                    <div className="mt-2 py-3 text-sm">
+                        Sudah punya akun? <Link to="/login" style={{ fontWeight: "400" }}>Masuk</Link>
+                    </div>
                 </div>
             </div>
             :

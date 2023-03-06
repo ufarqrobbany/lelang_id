@@ -33,7 +33,9 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Home::index');
 
 $routes->get('masyarakat/', 'Masyarakat::index');
-$routes->get('masyarakat/check_email/', 'Masyarakat::check');
+$routes->get('masyarakat/check/', 'Masyarakat::check');
+$routes->post('masyarakat/create/', 'Masyarakat::create');
+$routes->get('masyarakat/login/', 'Masyarakat::login');
 
 /*
  * --------------------------------------------------------------------
