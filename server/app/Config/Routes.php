@@ -36,6 +36,8 @@ $routes->get('masyarakat/', 'Masyarakat::index');
 $routes->get('masyarakat/check/', 'Masyarakat::check');
 $routes->post('masyarakat/create/', 'Masyarakat::create');
 $routes->get('masyarakat/login/', 'Masyarakat::login');
+$routes->post('masyarakat/edit/', 'Masyarakat::edit');
+$routes->get('masyarakat/foto/', 'Masyarakat::foto');
 
 /*
  * --------------------------------------------------------------------

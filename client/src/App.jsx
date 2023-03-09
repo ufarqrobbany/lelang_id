@@ -4,6 +4,7 @@ import useDocumentTitle from "@hooks/useDocumentTitle";
 import Home from "@pages/Home";
 import Login from "@pages/Auth/Login";
 import Register from "@pages/Auth/Register";
+import Profil from '@pages/Profil';
 import './App.css';
 
 // Page
@@ -26,6 +27,10 @@ function RegisterPage() {
   return <Page content={<Register />} title='Daftar' />
 }
 
+function ProfilPage() {
+  return <Page content={<Profil />} title='Profil' />
+}
+
 // Routes
 function App() {
   return (
@@ -34,6 +39,7 @@ function App() {
         <Route exact path="/" element={HomePage()} />
         <Route path="/login" element={LoginPage()} />
         <Route path="/register" element={RegisterPage()} />
+        <Route path="/profil" element={ProfilPage()} />
       </Routes>
     </BreakpointProvider>
   )

@@ -6,6 +6,7 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  overflow-x: hidden;
 
   /* color-scheme: light dark; */
   color: #393939;
@@ -15,14 +16,18 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --color-1: #B8AFD6;
+  --color-2: #A79EC6;
 }
 
 a {
   font-weight: 500;
-  color: #a78bfa;
+  color: var(--color-1);
   text-decoration: inherit;
   transition: 0.2s;
 }
+
 a:hover {
-  color: #8b5cf6;
+  color: var(--color-2);
 }

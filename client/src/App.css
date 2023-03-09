@@ -1,9 +1,95 @@
+:root {
+  --color-1: #B8AFD6;
+  --color-2: #A79EC6;
+}
+
+.text-1 {
+    color: var(--color-1);
+}
+
+.text-2 {
+    color: var(--color-2);
+}
+
+.bg-1 {
+    background-color: var(--color-1);
+}
+
+.bg-2 {
+    background-color: var(--color-2);
+}
+
+.bg-1-hover-2 {
+    background-color: var(--color-1);
+}
+
+.bg-1-hover-2:hover {
+    background-color: var(--color-2);
+}
+
+.border-color-1 {
+    border-color: var(--color-1);
+}
+
+.border-color-2 {
+    border-color: var(--color-2);
+}
+
 .links {
-    color: #a78bfa;
+    color: var(--color-1);
     cursor: pointer;
     transition: 0.2s;
 }
 
 .links:hover {
-    color: #8b5cf6;
+    color: var(--color-2);
+}
+
+.owl-stage-outer {
+    box-sizing: border-box !important;
+}
+
+.owl-stage {
+    display: flex !important;
+    align-items: stretch !important;
+    justify-content: space-between !important;
+    box-sizing: border-box !important;
+    padding: 10px 0;
+}
+
+.banner .owl-stage {
+    padding: 0;
+}
+
+.custom-file-input {
+    color: white;
+}
+
+.custom-file-input::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.custom-file-input::before {
+    margin-bottom: 10px;
+    content: 'Ganti foto profil';
+    display: block;
+    background-color: var(--color-1);
+    border-radius: 5px;
+    padding: 10px 16px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+    transition: 0.2s;
+    text-align: center;
+}
+
+.custom-file-input:hover::before {
+    background-color: var(--color-2);
+}
+
+.custom-file-input:active::before {
+    background-color: var(--color-1);
 }

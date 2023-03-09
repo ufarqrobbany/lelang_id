@@ -48,7 +48,7 @@ function Login() {
     }
 
     return (
-        <div className="flex flex-row flex-nowrap items-center text-center h-screen bg-violet-400">
+        <div className="flex flex-row flex-nowrap items-center text-center h-screen bg-1">
             <div className="mx-auto p-12 pb-6 bg-white rounded-xl drop-shadow-md">
                 <div className="mb-2">
                     <img src={Logo} alt="logo" width={50} className="mx-auto mb-2 rounded-full" />
@@ -69,7 +69,7 @@ function Login() {
                             <button type="button" className="toggle-pass border border-l-0 rounded-r-lg text-slate-500" style={{ padding: "11px 14px", borderColor: "#393939" }} onClick={togglePasswordShown}>{passwordShown ? <FaEyeSlash style={{ color: "#393939" }} /> : <FaEye style={{ color: "#393939" }} />}</button>
                         </div>
                     </div>
-                    <Submit disabled={(username && password && !loadingLogin) ? false : true} className={`${(username && password && !loadingLogin) ? 'bg-violet-400 hover:bg-violet-500' : 'bg-gray-300'} ease-out duration-300 flex items-center justify-center`}>
+                    <Submit disabled={(username && password && !loadingLogin) ? false : true} className={`${(username && password && !loadingLogin) ? 'bg-1-hover-2' : 'bg-gray-300'} ease-out duration-300 flex items-center justify-center`}>
                         {
                             loadingLogin ?
                                 <LoadingRing width={"24px"}></LoadingRing>

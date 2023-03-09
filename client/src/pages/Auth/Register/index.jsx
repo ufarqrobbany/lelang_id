@@ -112,7 +112,7 @@ function Register() {
 
     return (
         isNewEmail ?
-            <div className="flex flex-row flex-nowrap items-center text-center h-screen bg-violet-400">
+            <div className="flex flex-row flex-nowrap items-center text-center h-screen bg-1">
                 <div className="mx-auto p-12 pb-6 bg-white rounded-xl drop-shadow-md" style={{ width: "90%", height: "90vh" }}>
                     <div className="mb-2">
                         <div className="text-start links" onClick={() => { setIsNewEmail(false); setErrorMessage("") }} style={{ position: "absolute" }}>Ganti email</div>
@@ -144,7 +144,7 @@ function Register() {
                                 </label>
                             </div>
                         </div>
-                        <Submit disabled={(!namaLengkap || !username || !password || !passwordConfirm || !email || !telp || !gender || loadingCheckEmail) ? true : false} className={`${(!namaLengkap || !username || !password || !passwordConfirm || !email || !telp || !gender || loadingCheckEmail) ? 'bg-gray-300' : 'bg-violet-400 hover:bg-violet-500'} ease-out duration-300 `}>
+                        <Submit disabled={(!namaLengkap || !username || !password || !passwordConfirm || !email || !telp || !gender || loadingCheckEmail) ? true : false} className={`${(!namaLengkap || !username || !password || !passwordConfirm || !email || !telp || !gender || loadingCheckEmail) ? 'bg-gray-300' : 'bg-1-hover-2'} ease-out duration-300 `}>
                             {
                                 loadingRegister ?
                                     <LoadingRing width={"24px"}></LoadingRing>
@@ -160,11 +160,11 @@ function Register() {
             </div>
             :
             <div className="flex flex-row flex-nowrap items-center text-center h-screen">
-                <div className="m-6 flex-1 bg-violet-400 rounded-2xl overflow-hidden text-white h-100">
+                <div className="m-6 flex-1 bg-1 rounded-2xl overflow-hidden text-white h-100">
                     <img src={Banner} alt="banner" />
-                    <div className="px-10 flex flex-row justify-between items-center" style={{ backgroundColor: "#00000088" }}>
+                    <div className="px-10 flex flex-row justify-between items-center" style={{ backgroundColor: "#00000055" }}>
                         <div>Sudah punya akun?</div>
-                        <Link to="/login" className="my-4 px-6 py-2 rounded-lg bg-violet-400 text-white border-2 border-violet-400 hover:bg-transparent hover:text-violet-400 ease-out duration-300">
+                        <Link to="/login" className="my-4 px-6 py-2 rounded-lg bg-1 text-white border-2 border-color-1 hover:bg-transparent hover:text-1 ease-out duration-300">
                             Masuk
                         </Link>
                     </div>
@@ -183,7 +183,7 @@ function Register() {
                                 <Input required type="email" name="email" onChange={handleChangeEmail} value={email} />
                             </div>
                         </div>
-                        <Submit disabled={!email || loadingCheckEmail ? true : false} className={`${!email || loadingCheckEmail ? 'bg-gray-300' : 'bg-violet-400 hover:bg-violet-500'} ease-out duration-300 `}>
+                        <Submit disabled={!email || loadingCheckEmail ? true : false} className={`${!email || loadingCheckEmail ? 'bg-gray-300' : 'bg-1-hover-2'} ease-out duration-300 `}>
                             {
                                 loadingCheckEmail ?
                                     <LoadingRing width={"24px"}></LoadingRing>

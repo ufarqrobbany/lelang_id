@@ -10,13 +10,3 @@ export const Input = styled.input`
         border: 1px solid #a78bfa;
     }
 `;
-
-export const Submit = styled.button`
-    padding: 12px;
-    width: 100%;
-    color: white;
-    border-radius: 0.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;

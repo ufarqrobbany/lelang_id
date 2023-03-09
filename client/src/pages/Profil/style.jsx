@@ -6,9 +6,6 @@ export const Input = styled.input`
     border: 1px solid #393939;
     border-radius: 0.5rem;
     outline: none;
-    &:focus {
-        border: 1px solid #a78bfa;
-    }
 `;
 
 export const Submit = styled.button`
@@ -16,7 +13,4 @@ export const Submit = styled.button`
     width: 100%;
     color: white;
     border-radius: 0.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 `;

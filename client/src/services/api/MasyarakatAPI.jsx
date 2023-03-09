@@ -2,7 +2,7 @@ import axios from "axios";
 
 const config = {
     headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        'Content-Type': 'application/json; charset=UTF-8; multipart/form-data;',
     },
 };
 
@@ -26,5 +26,22 @@ export const createUser = async (nama_lengkap, username, password, email, telp, 
 
 export const login = async (username, password) => {
     const res = await axios.get(`http://localhost:8080/masyarakat/login/?username=${username}&password=${password}`, config);
+    return res.data;
+}
+
+export const editUser = async (id, nama_lengkap, jk, foto) => {
+    const res = await axios.post(`http://localhost:8080/masyarakat/edit/`, {
+        id: id,
+        nama_lengkap: nama_lengkap,
+        jk: jk,
+        file: foto
+    }, config);
+    return res.data;
+}
+
+export const getFoto = async (id) => {
+    const res = await axios.get(`http://localhost:8080/masyarakat/foto/?id=${id}`, {
+        responseType: 'blob'
+    });
     return res.data;
 }
