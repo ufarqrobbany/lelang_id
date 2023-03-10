@@ -39,6 +39,9 @@ $routes->get('masyarakat/login/', 'Masyarakat::login');
 $routes->post('masyarakat/edit/', 'Masyarakat::edit');
 $routes->get('masyarakat/foto/', 'Masyarakat::foto');
 
+$routes->post('barang/add/', 'Barang::add');
+$routes->get('barang/foto/', 'Barang::foto');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
