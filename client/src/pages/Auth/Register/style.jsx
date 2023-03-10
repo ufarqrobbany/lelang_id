@@ -7,7 +7,7 @@ export const Input = styled.input`
     border-radius: 0.5rem;
     outline: none;
     &:focus {
-        border: 1px solid #a78bfa;
+        border: 1px solid #B8AFD6;
     }
 `;
 

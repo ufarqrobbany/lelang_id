@@ -1,10 +1,10 @@
 import { Input } from "./style";
 
-const InputGroup = ({ label, name, type, value, handleChange, valueToggle, handleToggle, disabled, width }) => {
+const InputGroup = ({ label, name, type, value, handleChange, valueToggle, handleToggle, disabled, width, direction = 1 }) => {
     return (
-        <div className="mb-4" style={{ width: width }}>
-            <label className="block ml-1 mb-2 text-sm">{label}</label>
-            <div className="flex flex-row">
+        <div className={`mb-4 ${direction === 1 ? '' : 'flex flex-row items-center'}`} style={direction === 1 ? { width: width } : { columnGap: "10px", width: width }}>
+            <label className={`block ${direction === 1 ? 'ml-1 mb-2 text-sm' : 'text-md shrink-0'}`}>{label}</label>
+            <div className="flex flex-row" style={{ width: "100%" }}>
                 {
                     type === 'password' ?
                         <>
@@ -18,7 +18,6 @@ const InputGroup = ({ label, name, type, value, handleChange, valueToggle, handl
                 }
             </div>
         </div>
-
     )
 }
 

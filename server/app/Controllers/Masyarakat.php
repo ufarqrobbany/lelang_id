@@ -165,74 +165,65 @@ class Masyarakat extends ResourceController
     public function edit($id = null)
     {
         helper(['form', 'url']);
-        // Validation
-        // $input = $this->validate([
-        //     'file' => 'uploaded[file]|max_size[file,102400]|ext_in[file,jpg,jpeg,png],'
-        // ]);
-
         $id =  $this->request->getVar('id');
-
-        // $DIR = "/var/www/react-php-upload/";
-        // $httpPost = file_get_contents("php://input");
-        // $req = json_decode($httpPost);
-
-        // $foto =  $this->request->getVar('file');
-
-        // $file_chunks = explode(";base64,", $foto['result']);
-
-        // $fileType = explode("image/", $file_chunks[0]);
-        // $image_type = $fileType[1];
-        // $base64Img = base64_decode($file_chunks[1]);
-
-        // $file = $DIR . uniqid() . '.png';
-        // file_put_contents($file, $base64Img);
-
-        // Get file name and extension
-        // $name = $file->getName();
-        // $ext = $file->getClientExtension();
-
-        // Get random file name
-        // $newName = $file->getRandomName();
-
-        // Store file in public/uploads/ folder
-        // $file->move('../public/uploads', $newName);
-
-        // File path to display preview
-        // $filepath = base_url() . "/uploads" . "/" . $newName;
-
-        // Insert Record 
-        // move_uploaded_file($_FILES["file"]["tmp_name"], "img/" . $_FILES["file"]["name"]);
         $model = new MasyarakatModel();
+        $oldUser = $model->where('id_user', $id)->first();
 
-        $file = $this->request->getFile('file'); //in CI
-        $newName = $file->getRandomName();
-        $file->move('../public/uploads', $newName);
+        if ($file = $this->request->getFile('file')) {
+            $validationSize = $this->validate([
+                'file' => 'uploaded[file]|max_size[file,100]',
+            ]);
 
-        // $file = $_FILES['file'];
+            $validationImage = $this->validate([
+                'file' => 'uploaded[file]|is_image[file]',
+            ]);
 
-        $insertdata = [
-            'nama_lengkap' => $this->request->getVar('nama_lengkap'),
-            'jenis_kelamin' => $this->request->getVar('jk'),
-            'foto' => $newName
-            // 'foto' => explode("blob:", $file)[1]
-        ];
-        //  $insertdata['path'] = $filepath;
+            if (!$validationSize) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'Size foto tidak boleh lebih dari 100kb'
+                ]);
+            } else if (!$validationImage) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'Pastikan yang diupload adalah gambar/foto'
+                ]);
+            } else {
+                $oldFile = "../public/uploads/" . $oldUser['foto'];
+                $newName = $file->getRandomName();
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+                $file->move('../public/uploads', $newName);
+
+                $insertdata = [
+                    'nama_lengkap' => $this->request->getVar('nama_lengkap'),
+                    'jenis_kelamin' => $this->request->getVar('jk'),
+                    'foto' => $newName
+                ];
+            }
+        } else {
+            $insertdata = [
+                'nama_lengkap' => $this->request->getVar('nama_lengkap'),
+                'jenis_kelamin' => $this->request->getVar('jk')
+            ];
+        }
 
         $model->update($id, $insertdata);
 
-        $user  = $model->where('id_user', $id)->first();
+        $newUser = $model->where('id_user', $id)->first();
 
         return $this->response->setJSON([
             'success' => true,
             'message' => '',
             'data' => [
-                'id' => intval($user['id_user']),
-                'nama_lengkap' => $user['nama_lengkap'],
-                'username' => $user['username'],
-                'email' => $user['email'],
-                'telp' => $user['telp'],
-                'gender' => $user['jenis_kelamin'],
-                'foto' =>  $user['foto'],
+                'id' => intval($newUser['id_user']),
+                'nama_lengkap' => $newUser['nama_lengkap'],
+                'username' => $newUser['username'],
+                'email' => $newUser['email'],
+                'telp' => $newUser['telp'],
+                'gender' => $newUser['jenis_kelamin'],
+                'foto' =>  $newUser['foto'],
             ]
         ]);
     }

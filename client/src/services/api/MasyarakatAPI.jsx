@@ -41,7 +41,7 @@ export const editUser = async (id, nama_lengkap, jk, foto) => {
 
 export const getFoto = async (id) => {
     const res = await axios.get(`http://localhost:8080/masyarakat/foto/?id=${id}`, {
-        responseType: 'blob'
+        responseType: 'arraybuffer'
     });
     return res.data;
 }

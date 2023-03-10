@@ -6,6 +6,7 @@ import Login from "@pages/Auth/Login";
 import Register from "@pages/Auth/Register";
 import Profil from '@pages/Profil';
 import './App.css';
+import Lelang from '@pages/Lelang';
 
 // Page
 function Page(props) {
@@ -31,6 +32,10 @@ function ProfilPage() {
   return <Page content={<Profil />} title='Profil' />
 }
 
+function LelangPage() {
+  return <Page content={<Lelang />} title='Lelang Barang' />
+}
+
 // Routes
 function App() {
   return (
@@ -40,6 +45,7 @@ function App() {
         <Route path="/login" element={LoginPage()} />
         <Route path="/register" element={RegisterPage()} />
         <Route path="/profil" element={ProfilPage()} />
+        <Route path="/lelang" element={LelangPage()} />
       </Routes>
     </BreakpointProvider>
   )
